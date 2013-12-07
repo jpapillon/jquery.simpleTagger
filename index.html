@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>jQuery.tagger | Transforms a select into tags</title>
+  <meta name="description" content="jQuery tagger plugin to transform a select element into tags">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery.tagger.css">
+  <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+<div class="row">
+  <div class="col-lg-8">
+    <h1>jQuery.tagger</h1>
+    <p>Transforms a <code>&lt;select&gt;</code> element into a nice tagger input field. Inpired by <a href="https://github.com/TimSchlechter/bootstrap-tagsinput" target="_blank">bootstrap-tasinput</a> </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>&lt;select class="tagger"&gt;
+  &lt;option&gt;Javascript&lt;/option&gt;
+  &lt;option&gt;HTML&lt;/option&gt;
+  &lt;option&gt;CSS&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+  $(".tagger").tagger();
+&lt;/script&gt;
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-default">
+      <option>Javascript</option>
+      <option>HTML</option>
+      <option>CSS</option>
+    </select>
+  </div>
+</div>
+
+<div class="row"><h2 class="col-lg-8">Options</h2></div>
+
+<section>
+<div class="row">
+  <h3 class="col-lg-8">confirmDelete</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Set to 'true' to have user confirm when deleting a tag using the 'backspace' or the 'delete' keyboard keys.</p>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>
+$(".tagger").tagger({
+  confirmDelete: true
+});
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-confirmDelete">
+      <option>Javascript</option>
+    </select>
+  </div>
+</div>
+</section>
+
+
+<section>
+<div class="row">
+  <h3 class="col-lg-8">maxNbTags</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Set the maximum number of tags that can be entered in the input field.</p>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>
+$(".tagger").tagger({
+  maxNbTags: 2
+});
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-maxNbTags"></select>
+  </div>
+</div>
+</section>
+
+<div class="row"><h2 class="col-lg-8">Methods</h2></div>
+
+<section>
+<div class="row">
+  <h3 class="col-lg-8">getTags</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Returns an array of the entered tag values.</p>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+<pre>
+$(".tagger").tagger("getTags");
+</pre>
+  </div>
+</div>
+
+<div class="row">
+  <h3 class="col-lg-8">setTags</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Sets tags to be shown in the tagger.</p>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+<pre>
+$(".tagger").tagger("setTags", ["HTML", "CSS"]);
+</pre>
+  </div>
+</div>
+
+
+<div class="row">
+  <h3 class="col-lg-8">addTag</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Add a new tag to tagger.</p>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+<pre>
+$(".tagger").tagger("addTag", "HTML");
+</pre>
+  </div>
+</div>
+
+
+<div class="row">
+  <h3 class="col-lg-8">removeTag</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Remove a specific tag from the tagger.</p>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+<pre>
+$(".tagger").tagger("removeTag", "HTML");
+</pre>
+  </div>
+</div>
+
+<div class="row">
+  <h3 class="col-lg-8">removeTags</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Removes all the tags from the tagger.</p>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+<pre>
+$(".tagger").tagger("removeTags");
+</pre>
+  </div>
+</div>
+
+<footer>
+  Created by <a href="https://twitter.com/jeremiepapillon" target="_blank">@jeremiepapillon</a>
+</footer>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.tagger.min.js"></script>
+
+<script>
+$("#tagger-default").tagger();
+$("#tagger-confirmDelete").tagger({
+  confirmDelete: true
+});
+$("#tagger-maxNbTags").tagger({
+  maxNbTags: 2
+});
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<!--script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-XXXXX-X');ga('send','pageview');
+</script-->
+</body>
+</html>
