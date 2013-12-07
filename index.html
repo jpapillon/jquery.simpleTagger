@@ -2,14 +2,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>jQuery.tagger | Transforms a select into tags</title>
+  <title>jQuery.simpleTagger | Transforms a select into tags</title>
   <meta name="description" content="jQuery tagger plugin to transform a select element into tags">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/jquery.tagger.css">
+  <link rel="stylesheet" href="css/jquery.simpleTagger.css">
   <script src="js/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
 <div class="container">
 <div class="row">
   <div class="col-lg-8">
-    <h1>jQuery.tagger</h1>
+    <h1>jQuery.simpleTagger</h1>
     <p>Transforms a <code>&lt;select&gt;</code> element into a nice tagger input field. Inpired by <a href="https://github.com/TimSchlechter/bootstrap-tagsinput" target="_blank">bootstrap-tasinput</a> </p>
   </div>
 </div>
@@ -30,7 +30,7 @@
 &lt;/select&gt;
 
 &lt;script&gt;
-  $(".tagger").tagger();
+  $(".tagger").simpleTagger();
 &lt;/script&gt;
 </pre>
   </div>
@@ -55,7 +55,7 @@
 <div class="row">
   <div class="col-lg-4">
 <pre>
-$(".tagger").tagger({
+$(".tagger").simpleTagger({
   confirmDelete: true
 });
 </pre>
@@ -79,7 +79,7 @@ $(".tagger").tagger({
 <div class="row">
   <div class="col-lg-4">
 <pre>
-$(".tagger").tagger({
+$(".tagger").simpleTagger({
   maxNbTags: 2
 });
 </pre>
@@ -102,7 +102,7 @@ $(".tagger").tagger({
 <div class="row">
   <div class="col-lg-8">
 <pre>
-$(".tagger").tagger("getTags");
+$(".tagger").simpleTagger("getTags");
 </pre>
   </div>
 </div>
@@ -116,7 +116,7 @@ $(".tagger").tagger("getTags");
 <div class="row">
   <div class="col-lg-8">
 <pre>
-$(".tagger").tagger("setTags", ["HTML", "CSS"]);
+$(".tagger").simpleTagger("setTags", ["HTML", "CSS"]);
 </pre>
   </div>
 </div>
@@ -131,7 +131,7 @@ $(".tagger").tagger("setTags", ["HTML", "CSS"]);
 <div class="row">
   <div class="col-lg-8">
 <pre>
-$(".tagger").tagger("addTag", "HTML");
+$(".tagger").simpleTagger("addTag", "HTML");
 </pre>
   </div>
 </div>
@@ -146,7 +146,7 @@ $(".tagger").tagger("addTag", "HTML");
 <div class="row">
   <div class="col-lg-8">
 <pre>
-$(".tagger").tagger("removeTag", "HTML");
+$(".tagger").simpleTagger("removeTag", "HTML");
 </pre>
   </div>
 </div>
@@ -160,7 +160,7 @@ $(".tagger").tagger("removeTag", "HTML");
 <div class="row">
   <div class="col-lg-8">
 <pre>
-$(".tagger").tagger("removeTags");
+$(".tagger").simpleTagger("removeTags");
 </pre>
   </div>
 </div>
@@ -171,14 +171,14 @@ $(".tagger").tagger("removeTags");
 
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.tagger.min.js"></script>
+<script src="js/jquery.simpleTagger.js"></script>
 
 <script>
-$("#tagger-default").tagger();
-$("#tagger-confirmDelete").tagger({
+$("#tagger-default").simpleTagger();
+$("#tagger-confirmDelete").simpleTagger({
   confirmDelete: true
 });
-$("#tagger-maxNbTags").tagger({
+$("#tagger-maxNbTags").simpleTagger({
   maxNbTags: 2
 });
 </script>

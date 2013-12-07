@@ -1,0 +1,49 @@
+.tagger-container {
+  position: relative;
+  padding: 5px 5px 0 5px;
+  background-color: #FFF;
+  border: 1px solid #DCDDD8;
+  cursor: text;
+}
+
+.tagger-container input {
+  line-height: 22px;
+  border: 0px solid black;
+  width: 10px;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+.tagger-container input::-ms-clear {
+    display: none;
+}
+
+.tagger-tag {
+  line-height: 22px;
+  display: inline-block;
+  padding: 0 5px;
+  background-color: #475F77;
+  border: 1px solid #354B5E;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #FFF;
+}
+
+.tagger-tag.confirm {
+  border-color: #a70B0B;
+  background-color: #D74B4B;
+}
+
+.tagger-container input + .tagger-tag {
+  margin-left: 5px;
+}
+
+.tagger-tag .remove-tag {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.tagger-tag .remove-tag:hover {
+  color: #DCDDD8;
+}
+

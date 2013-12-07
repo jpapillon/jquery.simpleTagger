@@ -1,19 +1,19 @@
-jquery.tagger
+jquery.simpleTagger
 =============
 
-Transforms a <select> element into a nice tagger input field. Inpired by bootstrap-tasinput (https://github.com/TimSchlechter/bootstrap-tagsinput).
+Transforms a &lt;select&gt; element into a nice tagger input field. Inpired by bootstrap-tasinput (https://github.com/TimSchlechter/bootstrap-tagsinput).
 
 
 How to use:
-<select class="tagger">
-  <option>Javascript</option>
-  <option>HTML</option>
-  <option>CSS</option>
-</select>
+&lt;select class="tagger"&gt;
+  &lt;option&gt;Javascript&lt;/option&gt;
+  &lt;option&gt;HTML&lt;/option&gt;
+  &lt;option&gt;CSS&lt;/option&gt;
+&lt;/select&gt;
 
-<script>
-  $(".tagger").tagger({
+&lt;script&gt;
+  $(".tagger").simpleTagger({
   	confirmDelete: false,
   	maxNbTags: 10
   });
-</script>
+&lt;/script&gt;
