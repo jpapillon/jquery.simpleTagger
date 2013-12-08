@@ -14,7 +14,7 @@
   "dependencies": {
     "jquery": "*"
   },
-  "description": "jQuery plugin to ransforms a <select> into a cross-browser input field to manage tags",
+  "description": "jQuery plugin to transform a <select> into a cross-browser input field to manage tags",
   "keywords": [
     "tags",
     "labels",
