@@ -1,0 +1,27 @@
+{
+  "name": "simpleTagger",
+  "version": "0.1.0",
+  "title": "jQuery Simple Tagger",
+  "author": {
+    "name": "Jeremie Papillon"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "description": "jQuery plugin to ransforms a <select> into a cross-browser input field to manage tags",
+  "keywords": [
+    "tags",
+    "labels",
+    "select",
+    "input",
+    "form"
+  ],
+  "homepage": "http://jpapillon.github.io/jquery.simpleTagger/",
+  "download": "https://github.com/jpapillon/jquery.simpleTagger/"
+}

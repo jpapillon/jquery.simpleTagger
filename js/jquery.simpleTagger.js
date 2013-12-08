@@ -170,11 +170,11 @@
 
       // Events when user enters something inside the input field
       this.$input.on("keypress", function(e) {
-        if (e.keyCode !== 8 && e.keyCode !== 46) {
+        if (e.which !== 8 && e.which !== 46) {
           // Remove Class confirm if it was previously set and user changed his mind
           self.$container.find(".tagger-tag").removeClass("confirm");
         }
-        self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.keyCode));
+        self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.which));
       })
 
       // When user clicks on the container, it will focus the input field

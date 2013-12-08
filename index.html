@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>jQuery.simpleTagger | Transforms a select into tags</title>
-  <meta name="description" content="jQuery tagger plugin to transform a select element into tags">
+  <meta name="description" content="jQuery tagger plugin to transform a select element into a cross-browser input field to manage tags">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="css/normalize.css">
@@ -18,7 +18,7 @@
 <div class="row">
   <div class="col-lg-8">
     <h1>jQuery.simpleTagger</h1>
-    <p>Transforms a <code>&lt;select&gt;</code> element into a nice tagger input field. View <a href="https://github.com/jpapillon/jquery.simpleTagger">Github repository</a></p>
+    <p>Transforms a <code>&lt;select&gt;</code> element into a cross-browser input field to manage tags. View <a href="https://github.com/jpapillon/jquery.simpleTagger">Github repository</a></p>
   </div>
 </div>
 <div class="row">
@@ -85,7 +85,9 @@ $(".tagger").simpleTagger({
 </pre>
   </div>
   <div class="col-lg-4">
-    <select id="tagger-maxNbTags"></select>
+    <select id="tagger-maxNbTags">
+      <option>Javascript</option>
+    </select>
   </div>
 </div>
 </section>
@@ -166,7 +168,7 @@ $(".tagger").simpleTagger("removeTags");
 </div>
 
 <footer>
-  Created by <a href="https://twitter.com/jeremiepapillon" target="_blank">@jeremiepapillon</a>. Inpired by <a href="https://github.com/TimSchlechter/bootstrap-tagsinput" target="_blank">bootstrap-tasinput</a>.
+  Created by <a href="https://twitter.com/jeremiepapillon" target="_blank">@jeremiepapillon</a>.
 </footer>
 
 <script src="js/jquery-1.10.2.min.js"></script>

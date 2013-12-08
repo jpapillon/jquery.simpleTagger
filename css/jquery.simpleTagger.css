@@ -8,6 +8,8 @@
 
 .tagger-container input {
   line-height: 22px;
+  height: 24px;
+  vertical-align: baseline;
   border: 0px solid black;
   width: 10px;
   outline: none;
@@ -22,8 +24,8 @@
   line-height: 22px;
   display: inline-block;
   padding: 0 5px;
-  background-color: #475F77;
-  border: 1px solid #354B5E;
+  background-color: #5F9A33;
+  border: 1px solid #46811A;
   margin-right: 5px;
   margin-bottom: 5px;
   color: #FFF;
