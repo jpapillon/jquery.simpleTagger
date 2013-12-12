@@ -6,6 +6,15 @@
   cursor: text;
 }
 
+.tagger-container .input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tagger-container .input-container + .tagger-tag {
+  margin-left: 5px;
+}
+
 .tagger-container input {
   line-height: 22px;
   height: 24px;
@@ -14,10 +23,22 @@
   width: 10px;
   outline: none;
   margin-bottom: 5px;
+  position: relative;
+  background-color: transparent;
+  z-index: 200;
 }
 
 .tagger-container input::-ms-clear {
-    display: none;
+  display: none;
+}
+
+.tagger-container input + .placeholder {
+  line-height: 24px;
+  position: absolute;
+  top: 0;
+  left: 1px;
+  color: #AAA;
+  z-index: 100;
 }
 
 .tagger-tag {
@@ -34,10 +55,6 @@
 .tagger-tag.confirm {
   border-color: #a70B0B;
   background-color: #D74B4B;
-}
-
-.tagger-container input + .tagger-tag {
-  margin-left: 5px;
 }
 
 .tagger-tag .remove-tag {

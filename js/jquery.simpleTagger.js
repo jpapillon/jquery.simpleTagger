@@ -7,6 +7,7 @@
   var defaultOptions = {
     confirmDelete: false,
     maxNbTags: false,
+    placeholderText: "Add..."
   };
 
   function SimpleTagger(elem, options) {
@@ -16,12 +17,14 @@
     this.$select.hide();
 
     // Wrap everything under a container
-    this.$select.wrapAll($('<div class="tagger-container"></div>'));
+    this.$select.wrapAll($('<div class="tagger-container" />'));
     this.$container = elem.parents(".tagger-container");
 
-    // Add input text box
+    this.$inputContainer = $('<div class="input-container" />');
     this.$input = $('<input type="text" />');
-    this.$select.after(this.$input);
+    this.$placeholder = $('<span class="placeholder">' + (this.options.placeholderText ? this.options.placeholderText : "") + '</span>')
+    this.$inputContainer.append(this.$input).append(this.$placeholder);
+    this.$select.after(this.$inputContainer);
 
     // Add values set in the options
     var self = this;
@@ -30,6 +33,7 @@
     });
 
     this.setEvents();
+    this.adjustInputWidth();
   };
 
   SimpleTagger.prototype = {
@@ -64,11 +68,14 @@
 
     setEvents: function() {
       var self = this;
-
       this.$input.on("blur", function(e) {
+        // Try to add a tag with current input and remove it afterwards
+        self.addTag(self.$input.val());
+        self.$input.val("");
+        self.$placeholder.show();
         var tags = self.$container.find(".tagger-tag");
         tags.removeClass("confirm");
-        tags.last().after(self.$input);
+        tags.last().after(self.$inputContainer);
       });
 
       // Event when user pastes content into the input
@@ -85,10 +92,19 @@
       });
 
       this.$input.on("keyup", function(e) {
+        if (self.$inputContainer.siblings(".tagger-tag.confirm").length > 0) {
+          self.$placeholder.hide();
+        }
+
         switch (e.which) {
           case 8: // Backspace
           case 46: // Delete
             self.adjustInputWidth();
+            if (self.$input.val().length === 0) {
+              self.$placeholder.show();
+            } else {
+              self.$placeholder.hide();
+            }
             break;
         }
       });
@@ -103,10 +119,13 @@
           case 9: // Tab
           case 13: // Enter
             if ($.trim(self.$input.val()) !== "") {
-              self.addTag();
+              if (self.addTag()) {
+                self.$placeholder.show();
+              }
               e.preventDefault();
               e.stopPropagation();
-            } 
+            }
+            self.adjustInputWidth();
             break;
           case 8: // Backspace
           case 46: // Delete
@@ -114,9 +133,9 @@
             if (inputText.length === 0) {
               var elem;
               if (e.which === 8) { // 8: Backspace
-                elem = self.$input.prev(".tagger-tag");
+                elem = self.$inputContainer.prev(".tagger-tag");
               } else { // 46: Delete
-                elem = self.$input.next(".tagger-tag");
+                elem = self.$inputContainer.next(".tagger-tag");
               }
 
               // Remove the confirm class to others if it was set earlier
@@ -133,15 +152,7 @@
                 self.removeTag(elem.data("value"));
               }
             }
-            self.adjustInputWidth();
-            break;
-          case 46: // Delete
-            var inputText = self.$input.val();
-            if (inputText.length === 0) {
-              self.removeTag(self.$input.next(".tagger-tag").data("value"));
-            } else {
-              self.adjustInputWidth();
-            }
+            // Will adjust input width on "keyup"
             break;
           case 37: // Left arrow
             var inputText = self.$input.val();
@@ -174,8 +185,15 @@
           // Remove Class confirm if it was previously set and user changed his mind
           self.$container.find(".tagger-tag").removeClass("confirm");
         }
-        self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.which));
-      })
+
+        if (e.which !== 13) { // Enter
+          self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.which));
+          self.$placeholder.hide();
+        } else {
+          self.$placeholder.show();
+          self.adjustInputWidth();
+        }
+      });
 
       // When user clicks on the container, it will focus the input field
       this.$container.on("click", function(e) {
@@ -192,6 +210,7 @@
     },
 
     addTag: function(value) {
+      var added = false;
       value = $.trim(value || this.$input.val());
       if (value !== "") {
         var existingTag = this.findTag(value);
@@ -199,35 +218,41 @@
           // Highlight already existing tag
           existingTag.css("opacity", 0).animate({opacity: 1}, 300);
         } else {
+          added = true;
           var tag = $('<div class="tagger-tag">' + escapeHtml(value) + '<span class="remove-tag">&times;</span></div>');
           tag.data("value", value);
-          this.$input.before(tag);
-          this.inputReset(true);
+          this.$inputContainer.before(tag);
+          this.inputReset();
         }
       }
+
+      return added;
     },
 
     goToPreviousTag: function() {
-      this.$input.prev(".tagger-tag").before(this.$input);
+      this.$inputContainer.prevAll(".tagger-tag").first().before(this.$inputContainer);
       this.inputReset();
     },
 
     goToNextTag: function() {
-      this.$input.next(".tagger-tag").after(this.$input);
+      this.$inputContainer.nextAll(".tagger-tag").first().after(this.$inputContainer);
       this.inputReset();
     },
 
     inputReset: function(noFocus) {
       this.$input.val("");
-      this.$input.width(1);
-      if (!noFocus) {
-        var self = this;
-        setTimeout(function() { self.$input.focus(); }, 10);
-      }
+
+      // To update focus on input (IE)
+      var self = this;
+      setTimeout(function() { self.$input.focus(); }, 10);
+
+      this.adjustInputWidth();
     },
 
     adjustInputWidth: function(value) {
       value = value || this.$input.val(); // Take what is in the input field if value is not given
+
+      // Create fake div to calculate actual text width
       $("taggerWidth").remove();
       var testSubject = $("<taggerWidth/>").css({
         position: "absolute",
@@ -242,8 +267,19 @@
       testSubject.html(escapeHtml(value));
       $("body").append(testSubject);
 
+      var valueWidth = testSubject.width();
+
+      // Use placeholder if it was set in the options
+      var placeholderWidth = 0;
+      if (this.options.placeholderText) {
+        testSubject.html(escapeHtml(this.options.placeholderText));
+        placeholderWidth = testSubject.width();
+      }
+
+      var width = Math.max(valueWidth, placeholderWidth);
+
       var diff = this.$input.outerWidth() - this.$input.width(); // Keep a little margin
-      this.$input.width(Math.min(this.$container.width() - diff, testSubject.width() + 1 /* The text cursor */));
+      this.$input.width(Math.min(this.$container.width() - diff, width + 1 /* The text cursor */));
     }
   };
 
