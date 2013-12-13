@@ -140,6 +140,7 @@
 
       // Event when user pastes content into the input
       this.$input.on("paste", function(e) {
+        self.$placeholder.hide();
         if (self.reachedNbMaxTags()) {
           // Don't do anything if the maximum number of tags was reached
           e.preventDefault();
