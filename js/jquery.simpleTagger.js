@@ -47,12 +47,47 @@
       return tags;
     },
 
+    findTag: function(value) {
+      return this.$container.find(".tagger-tag").filter(function() { return $.data(this, "value") == value; });
+    },
+
+    addTag: function(value) {
+      var added = false;
+      value = $.trim(value || this.$input.val());
+      if (value !== "") {
+        var existingTag = this.findTag(value);
+        if (existingTag.length > 0) {
+          // Highlight already existing tag
+          existingTag.css("opacity", 0).animate({opacity: 1}, 300);
+        } else {
+          added = true;
+          var tag = $('<div class="tagger-tag">' + escapeHtml(value) + '<span class="remove-tag">&times;</span></div>');
+          tag.data("value", value);
+          this.$inputContainer.before(tag);
+          this.inputReset();
+
+          // Add option to select
+          if (this.$select.find('option[value="' + value + '"]').length === 0) {
+            this.$select.append('<option value="' + value + '"/>');
+          }
+        }
+      }
+
+      return added;
+    },
+
     removeTag: function(value) {
       this.$container.find(".tagger-tag").filter(function() { return $.data(this, "value") === value; }).remove();
+
+      // Remove option from select
+      this.$select.find('option[value="' + value + '"]').remove();
     },
 
     removeTags: function() {
       this.$container.find(".tagger-tag").remove();
+
+      // Remove all options from select
+      this.$select.find("option").remove();
     },
 
     setTags: function(tags) {
@@ -201,30 +236,6 @@
       this.$container.on("click", ".tagger-tag .remove-tag", function(e) {
         self.removeTag($(e.target).parents(".tagger-tag").data("value"));
       });
-    },
-
-    findTag: function(value) {
-      return this.$container.find(".tagger-tag").filter(function() { return $.data(this, "value") == value; });
-    },
-
-    addTag: function(value) {
-      var added = false;
-      value = $.trim(value || this.$input.val());
-      if (value !== "") {
-        var existingTag = this.findTag(value);
-        if (existingTag.length > 0) {
-          // Highlight already existing tag
-          existingTag.css("opacity", 0).animate({opacity: 1}, 300);
-        } else {
-          added = true;
-          var tag = $('<div class="tagger-tag">' + escapeHtml(value) + '<span class="remove-tag">&times;</span></div>');
-          tag.data("value", value);
-          this.$inputContainer.before(tag);
-          this.inputReset();
-        }
-      }
-
-      return added;
     },
 
     goToPreviousTag: function() {
