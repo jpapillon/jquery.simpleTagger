@@ -145,6 +145,30 @@ $(".tagger").simpleTagger({
 </div>
 </section>
 
+<section>
+<div class="row">
+  <h3 class="col-lg-8">disableAdd</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Set whether or not to let user add tags with keyboard actions.</p>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>
+$(".tagger").simpleTagger({
+  disableAdd: true
+});
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-disableAdd">
+      <option>Javascript</option>
+    </select>
+  </div>
+</div>
+</section>
+
+
 <div class="row"><h2 class="col-lg-8">Methods</h2></div>
 
 <section>
@@ -244,6 +268,10 @@ $("#tagger-withoutPlaceholderText").simpleTagger({
 });
 $("#tagger-caseSensitive").simpleTagger({
   caseSensitive: false
+});
+$("#tagger-disableAdd").simpleTagger({
+  disableAdd: true,
+  placeholderText: "Try to add something..."
 });
 </script>
 

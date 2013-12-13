@@ -8,7 +8,8 @@
     confirmDelete: false,
     maxNbTags: false,
     placeholderText: "Add...",
-    caseSensitive: false
+    caseSensitive: false,
+    disableAdd: false
   };
 
   function SimpleTagger(elem, options) {
@@ -115,19 +116,27 @@
       return this.options.maxNbTags && this.getTags().length >= this.options.maxNbTags;
     },
 
+    addTagFromKeyboard: function(value) {
+      if (!this.options.disableAdd) {
+        this.addTag(value);
+      }
+    },
+
     setEvents: function() {
       var self = this;
 
-      // Event when the input loses focus
-      this.$input.on("blur", function(e) {
-        // Try to add a tag with current input and remove it afterwards
-        self.addTag(self.$input.val());
-        self.$input.val("");
-        self.$placeholder.show();
-        var tags = self.$container.find(".tagger-tag");
-        tags.removeClass("confirm");
-        tags.last().after(self.$inputContainer);
-      });
+      if (!this.options.disableAdd) {
+        // Event when the input loses focus
+        this.$input.on("blur", function(e) {
+          // Try to add a tag with current input and remove it afterwards
+          self.addTagFromKeyboard(self.$input.val());
+          self.$input.val("");
+          self.$placeholder.show();
+          var tags = self.$container.find(".tagger-tag");
+          tags.removeClass("confirm");
+          tags.last().after(self.$inputContainer);
+        });
+      }
 
       // Event when user pastes content into the input
       this.$input.on("paste", function(e) {
@@ -220,7 +229,7 @@
           case 9: // Tab
           case 13: // Enter
             if ($.trim(self.$input.val()) !== "") {
-              if (self.addTag()) {
+              if (self.addTagFromKeyboard()) {
                 self.$placeholder.show();
               }
               e.preventDefault();
