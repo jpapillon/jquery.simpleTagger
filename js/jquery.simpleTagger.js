@@ -68,6 +68,8 @@
 
     setEvents: function() {
       var self = this;
+
+      // Event when the input loses focus
       this.$input.on("blur", function(e) {
         // Try to add a tag with current input and remove it afterwards
         self.addTag(self.$input.val());
@@ -81,68 +83,49 @@
       // Event when user pastes content into the input
       this.$input.on("paste", function(e) {
         if (self.reachedNbMaxTags()) {
+          // Don't do anything if the maximum number of tags was reached
           e.preventDefault();
           e.stopPropagation();
         } else {
           var elem = this;
+          // Little IE hack, to keep focus on the input
           setTimeout(function(e) {
             self.adjustInputWidth($(elem).val());
           }, 0);
         }
       });
 
-      this.$input.on("keyup", function(e) {
-        if (self.$inputContainer.siblings(".tagger-tag.confirm").length > 0) {
+      // Used when backspace/delete keys are released
+      this.$input.on("keyup", function(e) {        
+        // Show placeholder if nothing is in the input
+        if (self.$input.val().length === 0) {
+          self.$placeholder.show();
+        } else {
           self.$placeholder.hide();
         }
-
-        switch (e.which) {
-          case 8: // Backspace
-          case 46: // Delete
-            self.adjustInputWidth();
-            if (self.$input.val().length === 0) {
-              self.$placeholder.show();
-            } else {
-              self.$placeholder.hide();
-            }
-            break;
-        }
+        self.adjustInputWidth();
       });
-      // Events when user presses a key (that does not write anything in the box)
-      this.$input.on("keydown", function(e) {
-        if (e.which !== 8 && e.which !== 46) {
-          // Remove Class confirm if it was previously set and user changed his mind
-          self.$container.find(".tagger-tag").removeClass("confirm");
-        }
 
+      // When a key is down (but has not been entered in the input field)
+      this.$input.on("keydown", function(e) {
+        var inputText = self.$input.val();
         switch (e.which) {
-          case 9: // Tab
-          case 13: // Enter
-            if ($.trim(self.$input.val()) !== "") {
-              if (self.addTag()) {
-                self.$placeholder.show();
-              }
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            self.adjustInputWidth();
-            break;
           case 8: // Backspace
           case 46: // Delete
-            var inputText = self.$input.val();
             if (inputText.length === 0) {
+              // Input text was empty before hitting backspace/delete
               var elem;
-              if (e.which === 8) { // 8: Backspace
+              if (e.which === 8) { // Backspace
                 elem = self.$inputContainer.prev(".tagger-tag");
-              } else { // 46: Delete
+              } else { // Delete
                 elem = self.$inputContainer.next(".tagger-tag");
               }
 
-              // Remove the confirm class to others if it was set earlier
-              elem.siblings().removeClass("confirm");
-
               // Check if user needs to confirm
               if (self.options.confirmDelete) {
+                // Remove the confirm class to others if it was set earlier
+                elem.siblings().removeClass("confirm");
+
                 if (elem.hasClass("confirm")) {
                   self.removeTag(elem.data("value"));
                 } else {
@@ -155,43 +138,58 @@
             // Will adjust input width on "keyup"
             break;
           case 37: // Left arrow
-            var inputText = self.$input.val();
             if (inputText.length === 0) {
               self.goToPreviousTag();
             }
             break;
           case 39: // Right arrow
-            var inputText = self.$input.val();
             if (inputText.length === 0) {
               self.goToNextTag();
             }
             break;
-          case 38: // Up arrow
+        }
+
+        if (e.keyCode !== 8 && e.keyCode !== 46) {
+          // Remove Class confirm if it was previously set and user changed his mind
+          self.$container.find(".tagger-tag").removeClass("confirm");
+        }
+      });
+
+      // When something has been entered in the input field
+      this.$input.on("keypress", function(e) {
+        var inputText = self.$input.val();
+        if (e.keyCode !== 8 && e.keyCode !== 46) {
+          // Remove Class confirm if it was previously set and user changed his mind
+          self.$container.find(".tagger-tag").removeClass("confirm");
+        }
+
+        switch (e.keyCode) {
+          case 8: // Backspace
+          case 46: // Delete
+            // do nothing!
             break;
-          case 40: // Down arrow
+          case 9: // Tab
+          case 13: // Enter
+            if ($.trim(self.$input.val()) !== "") {
+              if (self.addTag()) {
+                self.$placeholder.show();
+              }
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            self.adjustInputWidth();
             break;
           default:
             if (!e.ctrlKey && self.reachedNbMaxTags()) {
               e.preventDefault();
               e.stopPropagation();
+            } else {
+              // Remove Class confirm if it was previously set and user changed his mind
+              self.$container.find(".tagger-tag").removeClass("confirm");
+              self.$placeholder.hide();
+              self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.which));
             }
             break;
-        }
-      });
-
-      // Events when user enters something inside the input field
-      this.$input.on("keypress", function(e) {
-        if (e.which !== 8 && e.which !== 46) {
-          // Remove Class confirm if it was previously set and user changed his mind
-          self.$container.find(".tagger-tag").removeClass("confirm");
-        }
-
-        if (e.which !== 13) { // Enter
-          self.adjustInputWidth(self.$input.val() + String.fromCharCode(e.which));
-          self.$placeholder.hide();
-        } else {
-          self.$placeholder.show();
-          self.adjustInputWidth();
         }
       });
 

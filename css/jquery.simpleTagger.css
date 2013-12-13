@@ -9,10 +9,7 @@
 .tagger-container .input-container {
   position: relative;
   display: inline-block;
-}
-
-.tagger-container .input-container + .tagger-tag {
-  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .tagger-container input {

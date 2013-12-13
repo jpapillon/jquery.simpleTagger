@@ -68,7 +68,6 @@ $(".tagger").simpleTagger({
 </div>
 </section>
 
-
 <section>
 <div class="row">
   <h3 class="col-lg-8">maxNbTags</h3>
@@ -87,6 +86,36 @@ $(".tagger").simpleTagger({
   <div class="col-lg-4">
     <select id="tagger-maxNbTags">
       <option>Javascript</option>
+    </select>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="row">
+  <h3 class="col-lg-8">placeholderText</h3>
+</div>
+<div class="row">
+  <p class="col-lg-8">Set the placeholder text to be shown when nothing is typed into the input field.</p>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>
+$(".tagger").simpleTagger({
+  placeholderText: "Add a new tag"
+});
+$(".tagger").simpleTagger({
+  placeholderText: ""
+});
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-withPlaceholderText">
+      <option>With placeholderText</option>
+    </select>
+    <br />
+    <select id="tagger-withoutPlaceholderText">
+      <option>Without placeholderText</option>
     </select>
   </div>
 </div>
@@ -182,6 +211,12 @@ $("#tagger-confirmDelete").simpleTagger({
 });
 $("#tagger-maxNbTags").simpleTagger({
   maxNbTags: 2
+});
+$("#tagger-withPlaceholderText").simpleTagger({
+  placeholderText: "Add a new tag"
+});
+$("#tagger-withoutPlaceholderText").simpleTagger({
+  placeholderText: ""
 });
 </script>
 
