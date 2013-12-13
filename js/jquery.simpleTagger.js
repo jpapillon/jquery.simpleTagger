@@ -7,7 +7,8 @@
   var defaultOptions = {
     confirmDelete: false,
     maxNbTags: false,
-    placeholderText: "Add..."
+    placeholderText: "Add...",
+    caseSensitive: false
   };
 
   function SimpleTagger(elem, options) {
@@ -29,7 +30,10 @@
     // Add values set in the options
     var self = this;
     this.$select.find("option").each(function() {
-      self.addTag($(this).val());
+      // Set option correctly & add tag
+      var value = $(this).val();
+      $(this).val(value).text(value);
+      self.addTag(value);
     });
 
     this.setEvents();
@@ -48,7 +52,17 @@
     },
 
     findTag: function(value) {
-      return this.$container.find(".tagger-tag").filter(function() { return $.data(this, "value") == value; });
+      var self = this;
+      return this.$container.find(".tagger-tag").filter(function() {
+        var a = $.data(this, "value");
+        var b = value;
+        // If case sensitive is set to true, transform values to lowercase
+        if (self.options.caseSensitive) {
+          a = a.toLowerCase();
+          b = b.toLowerCase();
+        }
+        return a === b;
+      });
     },
 
     addTag: function(value) {
