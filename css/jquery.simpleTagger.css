@@ -47,6 +47,12 @@
   margin-right: 5px;
   margin-bottom: 5px;
   color: #FFF;
+  white-space: nowrap;
+}
+
+.tagger-tag.full-width {
+  display:block;
+  margin-right: 0;
 }
 
 .tagger-tag.confirm {

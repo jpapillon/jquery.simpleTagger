@@ -76,7 +76,7 @@
           existingTag.css("opacity", 0).animate({opacity: 1}, 300);
         } else {
           added = true;
-          var tag = $('<div class="tagger-tag">' + escapeHtml(value) + '<span class="remove-tag">&times;</span></div>');
+          var tag = this.getCalculatedTag(value);
           tag.data("value", value);
           this.$inputContainer.before(tag);
           this.inputReset();
@@ -280,6 +280,68 @@
       setTimeout(function() { self.$input.focus(); }, 10);
 
       this.adjustInputWidth();
+    },
+
+    getCalculatedTag: function(value) {
+      var testSubject = $("#tagger-widthCalculator");
+      if (testSubject.length === 0) {
+        testSubject = $('<div id="tagger-widthCalculator" class="tagger-tag" />').css({
+          position: "absolute",
+          top: -9999,
+          left: -9999,
+          whiteSpace: "nowrap"
+        });
+        $("body").append(testSubject);
+      }
+
+      var changeContent = function(text) {
+        testSubject.html(escapeHtml(text) + '<span class="remove-tag">&times;</span>');
+      }
+
+      changeContent(value);
+      var width = testSubject.outerWidth();
+      var containerWidth = this.$container.width();
+      var fullWidth = width > containerWidth;
+
+      var self = this;
+      var getCalculatedHtml = function(text) {
+        changeContent(text);
+        var width = testSubject.outerWidth();
+        if (width <= containerWidth) {
+          return text + '<span class="remove-tag">&times;</span>';
+        } else {
+          // Ratio it down first
+          var ratio = containerWidth / width;
+          var pos = parseInt(text.length * ratio, 10);
+          changeContent(text.substr(0, pos));
+          width = testSubject.outerWidth();
+
+          var adjusted = false;
+          if (width > containerWidth) {
+            // Adjust again if it is still bigger; do one character at a time
+            while (width > containerWidth) {
+              adjusted = true;
+              pos--;
+              changeContent(text.substr(0, pos));
+              width = testSubject.outerWidth();
+            }
+            pos++; // Adjust position to be a number of characters to get to that index
+          } else {
+            // Adjust if it is shorter; do one character at a time
+            while (width < containerWidth) {
+              pos++;
+              changeContent(text.substr(0, pos));
+              width = testSubject.outerWidth();
+              console.log(width);
+            }
+          }
+        }
+
+        return text.substr(0, pos) + "<br />" + getCalculatedHtml(text.substr(pos));  
+      }
+
+      return $('<div class="tagger-tag' + (fullWidth?' full-width':'') + '">' + getCalculatedHtml(value) + '</div>');
+
     },
 
     adjustInputWidth: function(value) {
