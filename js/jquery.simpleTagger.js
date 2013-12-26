@@ -295,7 +295,7 @@
       }
 
       var changeContent = function(text) {
-        testSubject.html(escapeHtml(text) + '<span class="remove-tag">&times;</span>');
+        testSubject.html(escapeHtml(text));
       }
 
       changeContent(value);
@@ -308,7 +308,14 @@
         changeContent(text);
         var width = testSubject.outerWidth();
         if (width <= containerWidth) {
-          return text + '<span class="remove-tag">&times;</span>';
+          // Adjust one last time with 'x'
+          testSubject.html(escapeHtml(text) + '<span class="remove-tag">&times;</span>');
+          width = testSubject.outerWidth();
+          if (width <= containerWidth) { 
+            return escapeHtml(text) + '<span class="remove-tag">&times;</span>';
+          } else {
+            return escapeHtml(text) + '<br /><span class="remove-tag">&times;</span>';
+          }
         } else {
           // Ratio it down first
           var ratio = containerWidth / width;
@@ -325,23 +332,29 @@
               changeContent(text.substr(0, pos));
               width = testSubject.outerWidth();
             }
-            pos++; // Adjust position to be a number of characters to get to that index
+             // Adjust position to be a number of characters to get to that index
           } else {
             // Adjust if it is shorter; do one character at a time
             while (width < containerWidth) {
               pos++;
               changeContent(text.substr(0, pos));
               width = testSubject.outerWidth();
-              console.log(width);
             }
+            pos--; // Adjust position
           }
         }
 
-        return text.substr(0, pos) + "<br />" + getCalculatedHtml(text.substr(pos));  
+        // Find the last space to return on it, if present, otherwise break the word
+        var line = text.substr(0, pos);
+        var lastSpacePos = line.lastIndexOf(" ");
+        if (lastSpacePos !== -1) {
+          pos = lastSpacePos;
+        }
+
+        return escapeHtml(text.substr(0, pos)) + "<br />" + getCalculatedHtml($.trim(text.substr(pos)));  
       }
 
       return $('<div class="tagger-tag' + (fullWidth?' full-width':'') + '">' + getCalculatedHtml(value) + '</div>');
-
     },
 
     adjustInputWidth: function(value) {
