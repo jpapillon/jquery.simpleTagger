@@ -37,7 +37,7 @@
       self.addTag(value);
     });
 
-    this.setEvents();
+    (this.$select.is(":disabled")) ? this.disable() : this.enable();
     this.adjustInputWidth();
   };
 
@@ -120,6 +120,18 @@
       if (!this.options.disableAdd) {
         this.addTag(value);
       }
+    },
+
+    enable: function() {
+      this.setEvents();
+      this.$input.prop("disabled", false);
+      this.$container.removeClass("tagger-disabled");
+    },
+
+    disable: function() {
+      this.unsetEvents();
+      this.$input.prop("disabled", true);
+      this.$container.addClass("tagger-disabled");
     },
 
     setEvents: function() {
@@ -260,6 +272,16 @@
       this.$container.on("click", ".tagger-tag .remove-tag", function(e) {
         self.removeTag($(e.target).parents(".tagger-tag").data("value"));
       });
+    },
+
+    unsetEvents: function() {
+      this.$input.off("blur");
+      this.$input.off("paste");
+      this.$input.off("keyup");
+      this.$input.off("keydown");
+      this.$input.off("keypress");
+      this.$container.off("click", ".tagger-tag .remove-tag");
+      this.$container.off("click");
     },
 
     goToPreviousTag: function() {

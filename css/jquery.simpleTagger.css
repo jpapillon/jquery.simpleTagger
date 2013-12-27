@@ -6,6 +6,25 @@
   cursor: text;
 }
 
+.tagger-disabled,
+.tagger-disabled * {
+  cursor: not-allowed !important;
+}
+
+.tagger-disabled {
+  background-color: #EEE;
+}
+
+.tagger-disabled .tagger-tag {
+  background-color: #7BAD55;
+  border: 1px solid #80AD5E;
+}
+
+.tagger-disabled .remove-tag,
+.tagger-disabled input + .placeholder {
+  display: none;
+}
+
 .tagger-container .input-container {
   position: relative;
   display: inline-block;

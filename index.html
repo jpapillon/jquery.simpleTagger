@@ -42,6 +42,32 @@
     </select>
   </div>
 </div>
+<div class="row">
+  <div class="col-lg-4">
+<pre>&lt;select class="tagger" disabled&gt;
+  &lt;option&gt;Javascript&lt;/option&gt;
+  &lt;option&gt;HTML&lt;/option&gt;
+  &lt;option&gt;CSS&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;script&gt;
+  $(".tagger").simpleTagger();
+&lt;/script&gt;
+</pre>
+  </div>
+  <div class="col-lg-4">
+    <select id="tagger-disabled" class="tagger" disabled>
+      <option>Javascript</option>
+      <option>HTML</option>
+      <option>CSS</option>
+    </select>
+  </div>
+  <div class="col-lg-1">
+
+    <button id="enable-tagger" class="btn btn-primary btn-xs">Enable</button>
+    <button id="disable-tagger" class="btn btn-danger btn-xs">Disable</button>
+  </div>
+</div>
 
 <div class="row"><h2 class="col-lg-8">Options</h2></div>
 
@@ -273,6 +299,13 @@ $("#tagger-disableAdd").simpleTagger({
   disableAdd: true,
   placeholderText: "Try to add something..."
 });
+$("#tagger-disabled").simpleTagger();
+$("#enable-tagger").click(function() {
+  $("#tagger-disabled").simpleTagger("enable");
+})
+$("#disable-tagger").click(function() {
+  $("#tagger-disabled").simpleTagger("disable");
+})
 </script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
