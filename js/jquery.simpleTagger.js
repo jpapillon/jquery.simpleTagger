@@ -12,6 +12,7 @@
     caseSensitive: false,
     disableAdd: false,
 
+    attrId: null,
     attrValue: null,
     createFn: function(value) {
       return value;
@@ -60,10 +61,15 @@
 
     getTagIdentifier: function(tag) {
       var value = tag.data("value");
-      if (this.options.attrValue) {
-        return value[this.options.attrValue];
+      var tagIdentifier;
+      if (this.options.attrId) {
+        tagIdentifier = value[this.options.attrId];
+      } else if (this.options.attrValue) {
+        tagIdentifier = value[this.options.attrValue];
+      } else {
+        tagIdentifier = value;
       }
-      return value;
+      return tagIdentifier;
     },
 
     findTag: function(value) {
@@ -80,9 +86,17 @@
       });
     },
 
-    addTag: function(value) {
+    addTag: function(data) {
       var added = false;
-      value = $.trim(value || this.$input.val());
+      var isObjectData = false;
+
+      var value = data;
+      if ($.isPlainObject(data)) {
+        isObjectData = true;
+        value = data[this.options.attrValue];
+      }
+
+      value = $.trim(value);
       if (value !== "") {
         var existingTag = this.findTag(value);
         if (existingTag.length > 0) {
@@ -91,7 +105,10 @@
         } else {
           added = true;
           var tag = this.getCalculatedTag(value);
-          tag.data("value", this.options.createFn(value));
+
+          // This will either use the data "as is" if it is an object or use the createFn
+          // and pass in the value
+          tag.data("value", isObjectData ? data : this.options.createFn(value));
           this.$inputContainer.before(tag);
           this.inputReset();
 
@@ -257,8 +274,9 @@
           default:
             if ($.inArray(e.keyCode, self.options.addKeys) !== -1) {
               // User pressed the keys that will trigger the add tag
-              if ($.trim(self.$input.val()) !== "") {
-                if (self.addTagFromKeyboard()) {
+              var value = $.trim(self.$input.val());
+              if (value !== "") {
+                if (self.addTagFromKeyboard(value)) {
                   self.$placeholder.show();
                 }
                 e.preventDefault();
