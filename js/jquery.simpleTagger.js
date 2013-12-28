@@ -5,15 +5,21 @@
 
   // Plugin defaults
   var defaultOptions = {
-    confirmDelete: false,
-    maxNbTags: false,
+    addKeys: [9, 13], // Tab, Enter
     placeholderText: "Add...",
+    maxNbTags: false,
+    confirmDelete: false,
     caseSensitive: false,
     disableAdd: false,
-    addKeys: [9, 13] // Tab, Enter
+
+    attrValue: null,
+    createFn: function(value) {
+      return value;
+    }
   };
 
   function SimpleTagger(elem, options) {
+    var self = this;
     this.options = options;
 
     this.$select = elem;
@@ -30,7 +36,6 @@
     this.$select.after(this.$inputContainer);
 
     // Add values set in the options
-    var self = this;
     this.$select.find("option").each(function() {
       // Set option correctly & add tag
       var value = $(this).val();
@@ -53,10 +58,18 @@
       return tags;
     },
 
+    getTagIdentifier: function(tag) {
+      var value = tag.data("value");
+      if (this.options.attrValue) {
+        return value[this.options.attrValue];
+      }
+      return value;
+    },
+
     findTag: function(value) {
       var self = this;
       return this.$container.find(".tagger-tag").filter(function() {
-        var a = $.data(this, "value");
+        var a = self.getTagIdentifier($(this));
         var b = value;
         // If case sensitive is set to true, transform values to lowercase
         if (self.options.caseSensitive) {
@@ -78,7 +91,7 @@
         } else {
           added = true;
           var tag = this.getCalculatedTag(value);
-          tag.data("value", value);
+          tag.data("value", this.options.createFn(value));
           this.$inputContainer.before(tag);
           this.inputReset();
 
@@ -93,7 +106,8 @@
     },
 
     removeTag: function(value) {
-      this.$container.find(".tagger-tag").filter(function() { return $.data(this, "value") === value; }).remove();
+      var self = this;
+      this.$container.find(".tagger-tag").filter(function() { return self.getTagIdentifier($(this)) === value; }).remove();
 
       // Remove option from select
       this.$select.find('option[value="' + value + '"]').remove();
@@ -199,12 +213,12 @@
                 elem.siblings().removeClass("confirm");
 
                 if (elem.hasClass("confirm")) {
-                  self.removeTag(elem.data("value"));
+                  self.removeTag(self.getTagIdentifier(elem));
                 } else {
                   elem.addClass("confirm");
                 }
               } else {
-                self.removeTag(elem.data("value"));
+                self.removeTag(self.getTagIdentifier(elem));
               }
             }
             // Will adjust input width on "keyup"
@@ -270,7 +284,7 @@
       });
 
       this.$container.on("click", ".tagger-tag .remove-tag", function(e) {
-        self.removeTag($(e.target).parents(".tagger-tag").data("value"));
+        self.removeTag(self.getTagIdentifier($(e.target).parents(".tagger-tag")));
       });
     },
 
