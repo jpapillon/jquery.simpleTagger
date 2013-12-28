@@ -9,7 +9,8 @@
     maxNbTags: false,
     placeholderText: "Add...",
     caseSensitive: false,
-    disableAdd: false
+    disableAdd: false,
+    addKeys: [9, 13] // Tab, Enter
   };
 
   function SimpleTagger(elem, options) {
@@ -239,19 +240,18 @@
           case 46: // Delete
             // do nothing!
             break;
-          case 9: // Tab
-          case 13: // Enter
-            if ($.trim(self.$input.val()) !== "") {
-              if (self.addTagFromKeyboard()) {
-                self.$placeholder.show();
-              }
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            self.adjustInputWidth();
-            break;
           default:
-            if (!e.ctrlKey && self.reachedNbMaxTags()) {
+            if ($.inArray(e.keyCode, self.options.addKeys) !== -1) {
+              // User pressed the keys that will trigger the add tag
+              if ($.trim(self.$input.val()) !== "") {
+                if (self.addTagFromKeyboard()) {
+                  self.$placeholder.show();
+                }
+                e.preventDefault();
+                e.stopPropagation();
+              }
+              self.adjustInputWidth();
+            } else if (!e.ctrlKey && self.reachedNbMaxTags()) {
               e.preventDefault();
               e.stopPropagation();
             } else {
