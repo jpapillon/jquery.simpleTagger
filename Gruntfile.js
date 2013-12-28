@@ -1,6 +1,13 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('./simpleTagger.jquery.json'),
+    less: {
+      compile: {
+        files: {
+          "css/jquery.simpleTagger.css": ["less/jquery.simpleTagger.less"]
+        }
+      }
+    },
     jshint: {
       // define the files to lint
       files: ['gruntfile.js', 'simpleTagger.jquery.js'],
@@ -25,8 +32,9 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['jshint', 'uglify']);
+  grunt.registerTask('default', ['less', 'jshint', 'uglify']);
 };

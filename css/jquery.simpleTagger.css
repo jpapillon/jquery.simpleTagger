@@ -5,33 +5,38 @@
   border: 1px solid #DCDDD8;
   cursor: text;
 }
-
-.tagger-disabled,
-.tagger-disabled * {
-  cursor: not-allowed !important;
+.tagger-container .tagger-tag {
+  line-height: 22px;
+  display: inline-block;
+  padding: 0 5px;
+  background-color: #5F9A33;
+  border: 1px solid #46811A;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: #FFF;
+  white-space: nowrap;
 }
-
-.tagger-disabled {
-  background-color: #EEE;
+.tagger-container .tagger-tag.full-width {
+  display: block;
+  margin-right: 0;
 }
-
-.tagger-disabled .tagger-tag {
-  background-color: #7BAD55;
-  border: 1px solid #80AD5E;
+.tagger-container .tagger-tag.confirm {
+  border-color: #a70B0B;
+  background-color: #D74B4B;
 }
-
-.tagger-disabled .remove-tag,
-.tagger-disabled input + .placeholder {
-  display: none;
+.tagger-container .tagger-tag .remove-tag {
+  margin-left: 5px;
+  cursor: pointer;
 }
-
+.tagger-container .tagger-tag .remove-tag:hover {
+  color: #DCDDD8;
+}
 .tagger-container .input-container {
   position: relative;
   display: inline-block;
   margin-right: 5px;
 }
-
-.tagger-container input {
+.tagger-container .input-container input {
   line-height: 22px;
   height: 24px;
   vertical-align: baseline;
@@ -43,12 +48,10 @@
   background-color: transparent;
   z-index: 200;
 }
-
-.tagger-container input::-ms-clear {
+.tagger-container .input-container input::-ms-clear {
   display: none;
 }
-
-.tagger-container input + .placeholder {
+.tagger-container .input-container input + .placeholder {
   line-height: 24px;
   position: absolute;
   top: 0;
@@ -56,35 +59,18 @@
   color: #AAA;
   z-index: 100;
 }
-
-.tagger-tag {
-  line-height: 22px;
-  display: inline-block;
-  padding: 0 5px;
-  background-color: #5F9A33;
-  border: 1px solid #46811A;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  color: #FFF;
-  white-space: nowrap;
+.tagger-container.tagger-disabled {
+  background-color: #EEE;
+  cursor: not-allowed !important;
 }
-
-.tagger-tag.full-width {
-  display:block;
-  margin-right: 0;
+.tagger-container.tagger-disabled * {
+  cursor: not-allowed !important;
 }
-
-.tagger-tag.confirm {
-  border-color: #a70B0B;
-  background-color: #D74B4B;
+.tagger-container.tagger-disabled .tagger-tag {
+  background-color: #7BAD55;
+  border: 1px solid #80AD5E;
 }
-
-.tagger-tag .remove-tag {
-  margin-left: 5px;
-  cursor: pointer;
+.tagger-container.tagger-disabled .remove-tag,
+.tagger-container.tagger-disabled input + .placeholder {
+  display: none !important;
 }
-
-.tagger-tag .remove-tag:hover {
-  color: #DCDDD8;
-}
-
