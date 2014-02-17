@@ -1,0 +1,58 @@
+.plugin-showcase {
+  padding: 5px;
+  background-color: #333;
+  color: #FFF;
+  font-family: "Courier";
+  font-size: 1em;
+}
+.plugin-showcase .dollar-sign {
+  color: pink;
+}
+.plugin-showcase .css-selector {
+  color: #FFD373;
+}
+.plugin-showcase .line-nb {
+  margin-right: 10px;
+  color: #777;
+}
+.plugin-showcase .value[data-type=boolean],
+.plugin-showcase .value[data-type=number] {
+  color: #AA67D5;
+  border-bottom: 1px dotted #AA67D5;
+  cursor: pointer;
+}
+.plugin-showcase .value[data-type=boolean]:hover,
+.plugin-showcase .value[data-type=number]:hover {
+  color: #DD9AFF;
+  border-bottom-color: #DD9AFF;
+}
+.plugin-showcase .value[data-type=text] {
+  color: #FFD373;
+  border-bottom: 1px dotted #FFD373;
+  cursor: pointer;
+}
+.plugin-showcase .value[data-type=text]:hover {
+  color: #FFFFA6;
+  border-bottom-color: #FFFFA6;
+}
+.plugin-showcase .value input[type=text] {
+  padding: 0;
+  background-color: #333;
+  border: 0;
+  border-bottom: 1px dotted #FFD373;
+  font-size: 1em;
+  outline: none;
+  line-height: 17px;
+  font-family: "Courier";
+  color: #FFD373;
+}
+.plugin-showcase .value input[type=text]:focus {
+  color: #FFD373;
+}
+.plugin-showcase .value[data-type=number] input[type=text] {
+  color: #AA67D5;
+  border-bottom: 1px dotted #AA67D5;
+}
+.plugin-showcase .value-comment {
+  color: #777;
+}

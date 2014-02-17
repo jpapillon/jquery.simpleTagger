@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery.pluginShowcase.css">
   <link rel="stylesheet" href="css/jquery.simpleTagger.css">
   <script src="js/modernizr-2.6.2.min.js"></script>
 </head>
@@ -22,19 +23,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-4">
-<pre>&lt;select class="tagger"&gt;
-  &lt;option&gt;Javascript&lt;/option&gt;
-  &lt;option&gt;HTML&lt;/option&gt;
-  &lt;option&gt;CSS&lt;/option&gt;
-&lt;/select&gt;
-
-&lt;script&gt;
-  $(".tagger").simpleTagger();
-&lt;/script&gt;
-</pre>
+  <div class="col-lg-12">
+    <div id="simpleTagger-showcase"></div>
+    <div id="madeWith-jqueryShowcase">// This dynamic showcase is built with <a href="https://github.com/jpapillon/jquery.pluginShowcase">jQuery.pluginShowcase</a></div>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-12">
     <select id="tagger-default">
       <option>Javascript</option>
       <option>HTML</option>
@@ -42,155 +35,6 @@
     </select>
   </div>
 </div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>&lt;select class="tagger" disabled&gt;
-  &lt;option&gt;Javascript&lt;/option&gt;
-  &lt;option&gt;HTML&lt;/option&gt;
-  &lt;option&gt;CSS&lt;/option&gt;
-&lt;/select&gt;
-
-&lt;script&gt;
-  $(".tagger").simpleTagger();
-&lt;/script&gt;
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-disabled" class="tagger" disabled>
-      <option>Javascript</option>
-      <option>HTML</option>
-      <option>CSS</option>
-    </select>
-    <button id="enable-tagger" class="btn btn-primary btn-xs">Enable</button>
-    <button id="disable-tagger" class="btn btn-danger btn-xs">Disable</button>
-  </div>
-</div>
-
-<div class="row"><h2 class="col-lg-8">Options</h2></div>
-
-<section>
-<div class="row">
-  <h3 class="col-lg-8">confirmDelete</h3>
-</div>
-<div class="row">
-  <p class="col-lg-8">Set to 'true' to have user confirm when deleting a tag using the 'backspace' or the 'delete' keyboard keys.</p>
-</div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>
-$(".tagger").simpleTagger({
-  confirmDelete: true
-});
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-confirmDelete">
-      <option>Javascript</option>
-    </select>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="row">
-  <h3 class="col-lg-8">maxNbTags</h3>
-</div>
-<div class="row">
-  <p class="col-lg-8">Set the maximum number of tags that can be entered in the input field.</p>
-</div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>
-$(".tagger").simpleTagger({
-  maxNbTags: 2
-});
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-maxNbTags">
-      <option>Javascript</option>
-    </select>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="row">
-  <h3 class="col-lg-8">placeholderText</h3>
-</div>
-<div class="row">
-  <p class="col-lg-8">Set the placeholder text to be shown when nothing is typed into the input field.</p>
-</div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>
-$(".tagger").simpleTagger({
-  placeholderText: "Add a new tag"
-});
-$(".tagger").simpleTagger({
-  placeholderText: ""
-});
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-withPlaceholderText">
-      <option>With placeholderText</option>
-    </select>
-    <br />
-    <select id="tagger-withoutPlaceholderText">
-      <option>Without placeholderText</option>
-    </select>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="row">
-  <h3 class="col-lg-8">caseSensitive</h3>
-</div>
-<div class="row">
-  <p class="col-lg-8">To set whether to compare values with a case sensitive comparison or not.</p>
-</div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>
-$(".tagger").simpleTagger({
-  caseSensitive: false
-});
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-caseSensitive">
-      <option>Javascript</option>
-      <option>javascript</option>
-    </select>
-  </div>
-</div>
-</section>
-
-<section>
-<div class="row">
-  <h3 class="col-lg-8">disableAdd</h3>
-</div>
-<div class="row">
-  <p class="col-lg-8">Set whether or not to let user add tags with keyboard actions.</p>
-</div>
-<div class="row">
-  <div class="col-lg-4">
-<pre>
-$(".tagger").simpleTagger({
-  disableAdd: true
-});
-</pre>
-  </div>
-  <div class="col-lg-4">
-    <select id="tagger-disableAdd">
-      <option>Javascript</option>
-    </select>
-  </div>
-</div>
-</section>
-
 
 <div class="row"><h2 class="col-lg-8">Methods</h2></div>
 
@@ -223,7 +67,6 @@ $(".tagger").simpleTagger("setTags", ["HTML", "CSS"]);
   </div>
 </div>
 
-
 <div class="row">
   <h3 class="col-lg-8">addTag</h3>
 </div>
@@ -237,7 +80,6 @@ $(".tagger").simpleTagger("addTag", "HTML");
 </pre>
   </div>
 </div>
-
 
 <div class="row">
   <h3 class="col-lg-8">removeTag</h3>
@@ -273,36 +115,52 @@ $(".tagger").simpleTagger("removeTags");
 
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.pluginShowcase.min.js"></script>
 <script src="js/jquery.simpleTagger.js"></script>
 
+
+
 <script>
-$("#tagger-default").simpleTagger();
-$("#tagger-confirmDelete").simpleTagger({
-  confirmDelete: true
+$("#simpleTagger-showcase").pluginShowcase({
+  cssSelector: "#tagger",
+  pluginName: "simpleTagger",
+  attributes: {
+    caseSensitive: {
+      type: "boolean",
+      defaultValue: true,
+      comment: "Tags should be case-sensitive"
+    },
+    confirmDelete: {
+      type: "boolean",
+      defaultValue: true,
+      comment: "User needs to confirm on keyboard delete"
+    },
+    disableAdd: {
+      type: "boolean",
+      defaultValue: false,
+      comment: "User can type but can't add a new tag"
+    },
+    maxNbTags: {
+      type: "number",
+      defaultValue: -1,
+      comment: "-1 or a positive number for a limit",
+      validate: function(value) {
+        return !isNaN(value) && value % 1 === 0 && (value == -1 || value > 0);
+      }
+    },
+    placeholderText: {
+      type: "text",
+      defaultValue: "Add a new tag",
+      comment: "Text to be used as the placeholder"
+    }
+  },
+  onChange: function(attributes) {
+    $("#tagger-default").simpleTagger("destroy");
+    $("#tagger-default").simpleTagger(attributes);
+  }
 });
-$("#tagger-maxNbTags").simpleTagger({
-  maxNbTags: 2
-});
-$("#tagger-withPlaceholderText").simpleTagger({
-  placeholderText: "Add a new tag"
-});
-$("#tagger-withoutPlaceholderText").simpleTagger({
-  placeholderText: ""
-});
-$("#tagger-caseSensitive").simpleTagger({
-  caseSensitive: false
-});
-$("#tagger-disableAdd").simpleTagger({
-  disableAdd: true,
-  placeholderText: "Try to add something..."
-});
-$("#tagger-disabled").simpleTagger();
-$("#enable-tagger").click(function() {
-  $("#tagger-disabled").simpleTagger("enable");
-})
-$("#disable-tagger").click(function() {
-  $("#tagger-disabled").simpleTagger("disable");
-})
+
+$("#tagger-default").simpleTagger($("#simpleTagger-showcase").pluginShowcase("getAttributes"));
 </script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

@@ -145,7 +145,7 @@
     },
 
     reachedNbMaxTags: function() {
-      return this.options.maxNbTags && this.getTags().length >= this.options.maxNbTags;
+      return this.options.maxNbTags && this.options.maxNbTags >= 0 && this.getTags().length >= this.options.maxNbTags;
     },
 
     addTagFromKeyboard: function(value) {
@@ -164,6 +164,10 @@
       this.unsetEvents();
       this.$input.prop("disabled", true);
       this.$container.addClass("tagger-disabled");
+    },
+
+    destroy: function() {
+      this.$container.parent().html(this.$select.show());
     },
 
     setEvents: function() {

@@ -98,6 +98,14 @@ textarea {
    ========================================================================== */
 
 
+#madeWith-jqueryShowcase {
+    margin-bottom: 15px;
+    padding: 5px;
+    background-color: #333;
+    color: #777;
+    font-family: "Courier";
+    font-size: 1em;
+}
 
 footer {
     margin: 40px 0;
